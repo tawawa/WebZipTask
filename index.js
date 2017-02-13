@@ -13,9 +13,30 @@ app.use(function(req,res,next) {
     next();
 });
 
-app.get('/', (req, res) => {
-  res.set('Content-Type', 'text/html');
-  res.status(200).send(config.message);
+app.get('/*', (req, res) => {
+    console.log('url',req.url);
+    req.webtaskContext.storage.get(function(err,data) {
+        if (err) {
+            return res.status(400).send('awooga');
+        }
+        if (data === undefined) {
+            data = {};
+            /*
+            //zip;
+            var zip = new require('node-zip')();
+            zip.file('test.file', 'hello there');
+            var data = zip.generate({base64:false,compression:'DEFLATE'});
+            console.log(data); // ugly data
+            //unzip
+            var unzip = new require('node-zip')(data, {base64: false, checkCRC32: true});
+            console.log(unzip.files['test.file']); // hello there
+            */
+        }
+        console.log('data',data);
+        
+        res.set('Content-Type', 'text/html');
+        res.status(200).send(config.message);
+    });    
 });
 
 // This endpoint would be called by webtask-gallery to dicover your metadata
