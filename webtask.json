@@ -1,0 +1,14 @@
+{
+  "title": "web-zip-task",
+  "name": "web-zip-task",
+  "version": "1.0.0",
+  "author": "David Edson",
+  "description": "Zipped up webtask",
+  "type": "application",
+  "repository": "git@github.com:eddo888/WebZipTask.git",
+  "keywords": [
+      "auth0",
+      "server",
+      "webtask"
+  ]
+}
