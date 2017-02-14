@@ -28,10 +28,4 @@ secrets=$(perl -ne 'print " --secret $1=$2" if (/^([^=]+)=(.*)$/);' ".env")
 
 wt create --name $name ./build/bundle.js $secrets
 
-echo
-
-url="https://wt-eddo888-tpg-com-au-0.run.webtask.io/$name/index.html"
-
-echo "url=$url"
-curl $url
 

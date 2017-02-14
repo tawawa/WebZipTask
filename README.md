@@ -20,21 +20,28 @@ The deploy script will bundle up the resources directory and make it a ZIP file 
 
 ```bash
 $ ./deploy.sh 
-updating: index.html (deflated 39%)
-updating: js/ (stored 0%)
-updating: js/logic.js (deflated 15%)
+  adding: index.html (deflated 39%)
+  adding: js/ (stored 0%)
+  adding: js/logic.js (deflated 15%)
 
 > web-zip-task@0.0.1 bundle /Users/davide/git/github.com/eddo888/WebZipTask
 > wt-bundle webtask.js -o ./build/bundle.js
 
 Bundle successfully written to `./build/bundle.js`
+Name:        WebZipTask
+Removed webtask: WebZipTask
 Webtask created
 
 You can access your webtask at the following url:
 
 https://wt-eddo888-tpg-com-au-0.run.webtask.io/WebZipTask
 
-url=https://wt-eddo888-tpg-com-au-0.run.webtask.io/WebZipTask/index.html
+```
+
+now you can curl the web task to get the resource
+
+```bash
+$ curl https://wt-eddo888-tpg-com-au-0.run.webtask.io/WebZipTask/index.html
 <html>
   <head>
     <script src="js/logic.js" type="text/javascript"></script>
@@ -45,8 +52,19 @@ url=https://wt-eddo888-tpg-com-au-0.run.webtask.io/WebZipTask/index.html
     </script>
   </body>
 </html>
-
 ```
+## logging
+
+please see [webtask.io](https://webtask.io) for more info on webtasks and logging
+
+```bash
+$ wt logs
+[22:48:47.660Z]  INFO wt: connected to streaming logs (container=wt-eddo888-tpg-com-au-0)
+[22:48:52.557Z]  INFO wt: new webtask request 1487112532514.443614
+[22:48:52.711Z]  INFO wt: url /index.html
+[22:48:52.729Z]  INFO wt: finished webtask request 1487112532514.443614 with HTTP 200 in 174ms
+```
+
 ## secrets
 
 Web tasks allow you to configure secrets using the wt create --secret option. I have packaged up  .env capability that allows you to access configuration data in either webtask context or local server.js context.
