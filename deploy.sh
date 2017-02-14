@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+zip -r resources.zip resources
+echo -n "module.exports = '" > resources.js
+base64 resources.zip | perl -pe 's/\n//g' >> resources.js
+echo "';" >> resources.js
+
+exit
+
 name='hello'
 
 npm install
