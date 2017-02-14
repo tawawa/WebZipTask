@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 
-zip -r resources.zip resources
+pushd resources
+zip -r ../resources.zip *
+popd
+
 echo -n "module.exports = '" > resources.js
 base64 resources.zip | perl -pe 's/\n//g' >> resources.js
 echo "';" >> resources.js
-
-exit
 
 name='hello'
 
@@ -22,5 +23,5 @@ secrets=$(perl -ne 'print " --secret $1=$2" if (/^([^=]+)=(.*)$/);' ".env")
 wt create --name $name ./build/bundle.js $secrets
 
 
-curl https://wt-eddo888-tpg-com-au-0.run.webtask.io/hello/fred
+curl https://wt-eddo888-tpg-com-au-0.run.webtask.io/hello/index.html
 
