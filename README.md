@@ -78,5 +78,22 @@ $ npm start
 Bundle successfully written to `./build/bundle.js`
 Server started on port 3000
 
+```
+
+now you can curl the result
+
+```bash
+$ curl localhost:3000/index.html
+<html>
+  <head>
+    <script src="js/logic.js" type="text/javascript"></script>
+  <body>
+    <p>Hello</p>
+    <script type="text/javascript">
+      hello('world');
+    </script>
+  </body>
+</html>
 
 ```
+
