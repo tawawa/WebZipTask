@@ -18,37 +18,32 @@ app.use(function(req,res,next) {
 app.get('/*', (req, res) => {
     console.log('url',req.url);
 
-    //res.set('Content-Type', 'text/html');
-
-    var unzip = new zipper(resources, {
-        base64: true,
-        checkCRC32: true
-    });
-
-    /*
-    _.each(unzip.files, function(value,name) {
-        console.log(name, value._data);
-    });
-    */
-
-    var url = req.url.substring(1);
-    res.status(200).send(unzip.files[url]._data);
-
-    /*
-    req.webtaskContext.storage.get(function(err,data) {
+    req.webtaskContext.storage.get(function(err, data) {
         if (err) {
             return res.status(400).send('awooga');
         }
-        if (data === undefined) {
-            data = {};
-        }
-        console.log('data',data);
         
-        res.set('Content-Type', 'text/html');
-        res.status(200).send(config.message);
-    });    
-    */
-    
+        if (data === undefined) {
+            console.log('loading data');
+            data = {};
+            var unzip = new zipper(resources, {
+                base64: true,
+                checkCRC32: true
+            });
+            _.each(unzip.files, function(value, name) {
+                data[name] = value._data;
+            });
+
+            req.webtaskContext.storage.set(data, function(err) {
+                if (err) {
+                    console.log('err',err);
+                }
+            });
+        }
+
+        var url = req.url.substring(1);
+        res.status(200).send(data[url]);
+    });
 
 });
 

@@ -4,6 +4,7 @@ pushd resources
 zip -r ../resources.zip *
 popd
 
+# build a base64 resource variable that will be unzipped locally on run
 echo -n "module.exports = '" > resources.js
 base64 resources.zip | perl -pe 's/\n//g' >> resources.js
 echo "';" >> resources.js
