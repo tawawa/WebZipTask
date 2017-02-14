@@ -1,15 +1,20 @@
 #!/usr/bin/env bash
 
-pushd resources
+if [ -f resources.zip ]
+then
+    rm resources.zip
+fi
+
+pushd resources > /dev/null
 zip -r ../resources.zip *
-popd
+popd > /dev/null
 
 # build a base64 resource variable that will be unzipped locally on run
 echo -n "module.exports = '" > resources.js
 base64 resources.zip | perl -pe 's/\n//g' >> resources.js
 echo "';" >> resources.js
 
-name='hello'
+name='WebZipTask'
 
 npm install
 npm run bundle
@@ -23,6 +28,10 @@ secrets=$(perl -ne 'print " --secret $1=$2" if (/^([^=]+)=(.*)$/);' ".env")
 
 wt create --name $name ./build/bundle.js $secrets
 
+echo
 
-curl https://wt-eddo888-tpg-com-au-0.run.webtask.io/hello/index.html
+url="https://wt-eddo888-tpg-com-au-0.run.webtask.io/$name/index.html"
+
+echo "url=$url"
+curl $url
 
